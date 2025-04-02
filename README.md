@@ -10,7 +10,75 @@ By contrast, this project will be much more "zoomed out", and you'll be asked to
 
 My plan is to treat this project like a real-world data team project. I will be acting as your manager, and you'll be given tasks that I would ask a junior membor of my team to accomplish. In a real-world project, managers don't usually do a lot of hand-holding (nor do you want them to!). Instead, a good manager will ask you to work on something, give clear guidelines and context about what you're supposed to accomplish and why, but not get lost in the details. Very soon, you'll join a team in the workforce, and this is 100% the type of situation you'll find yourself in. So we're going to give you some exposure to that. 
 
-As usual, I’ve broken down the milestone into four key tasks. For each, I’ll describe the goal in managerial terms and list specific objectives you should meet. Remember, these are high-level requirements – you’ll need to determine how to achieve them using the skills and tools you’ve acquired over the course of the semester.
+As usual, I’ve broken down the milestone into four key tasks. For each, I’ll describe the goal in managerial terms and list specific objectives you should meet. Remember, these are high-level requirements – you’ll need to determine how to achieve them using the skills and tools you’ve acquired over the course of the semester. 
+
+Below is an overview of the full system, with some highlights indicating where each of the tasks fit in the bigger picture:
+
+<img src="screenshots/readme_img/system_overview.png"  width="80%">
+
+And here's a rough idea of what the ending file system looks like, but, as you'll find out below, I'm not being prescriptive about how you name things, so this is just here in case it's helpful.
+
+```bash
+is-566-11-final-project-1
+├─ README.md
+├─ compose.yml
+├─ dbt
+│ ├─ analyses
+│ │ ├─ campaign_sales_analysis.sql
+│ │ └─ email_campaign_performance.sql
+│ ├─ dbt_project.yml
+│ ├─ models
+│ │ ├─ intermediate
+│ │ │  ├─ int_sales_order_line_items.sql
+│ │ │  ├─ int_sales_order_with_customers.sql    # <-- Task 4
+│ │ │  └─ int_sales_orders_with_campaign.sql
+│ │ ├─ models.yml
+│ │ └─ staging
+│ │    ├─ adventure_db
+│ │    │  ├─ stg_adventure_db__customers.sql
+│ │    │  ├─ stg_adventure_db__inventory.sql
+│ │    │  ├─ stg_adventure_db__product_vendors.sql
+│ │    │  ├─ stg_adventure_db__products.sql
+│ │    │  └─ stg_adventure_db__vendors.sql
+│ │    ├─ ecom
+│ │    │  ├─ base
+│ │    │  │  ├─ base_ecom__email_campaigns.sql
+│ │    │  │  ├─ base_ecom__email_mktg_new.sql
+│ │    │  │  └─ base_ecom__sales_orders.sql
+│ │    │  ├─ stg_ecom__email_campaigns.sql
+│ │    │  ├─ stg_ecom__purchase_orders.sql
+│ │    │  └─ stg_ecom__sales_orders.sql          # <-- Task 3
+│ │    ├─ real_time                              # <-- Task 3
+│ │    │  ├─ base                                # <-- Task 3
+│ │    │  │  └─ base_real_time__sales_orders.sql # <-- Task 3
+│ │    │  └─ stg_real_time__chat_logs.sql        # <-- Task 3
+│ │    └─ sources.yml                            # <-- Task 3
+│ ├─ seeds
+│ │ ├─ _seeds.yml
+│ │ ├─ measures.csv
+│ │ └─ ship_method.csv
+│ └─ tests
+│   └─ generic
+│     ├─ positive_inventory_values.sql
+│     ├─ preferred_vendors_credit_check.sql
+│     ├─ test_column_fully_null.sql
+│     └─ test_single_conversion_per_order.sql
+├─ load_stages.sql                               # <-- Task 2
+├─ processor                                              
+│ ├─ Dockerfile                # <-- Task 1                              
+│ ├─ etl                                              
+│ │ ├─ extract.py                                              
+│ │ └─ load.py                                              
+│ ├─ init.sql                                              
+│ ├─ main.py                   # <-- Task 1                           
+│ ├─ requirements_sol.txt                                              
+│ └─ utils
+│   ├─ connections.py
+│   ├─ env_loader.py
+│   └─ watermark.py
+├─ scratch.sql
+└─ screenshots
+```
 
 > [!TIP]
 > Despite my desire for this to feel like a real-world project and encouraging you to use some autonomy, that doesn't mean I'm not here to help. As usual, we'll try to balance this appropriately. But you'll be free to choose how you go about your solution without strict guidelines, and I'll plan to just be around to answer questions, help troubleshoot, etc.
@@ -51,7 +119,7 @@ Now that the raw data from our two sources is inside Snowflake, we need to integ
 - **Configure sources for new data**: Update your dbt project to declare the new raw data as sources. 
 - **Develop staging models**: Create (or adapt existing) staging models that select from the raw source data and apply initial transformations/cleaning. Use the same conventions that we have been using in the last two projects, and make smart decisions that you could easily justify.
 - **Adhere to dbt best practices**: Organize your models properly in the project structure, using the same hierarchy that we've already been using. Your goal is to integrate your new functionality into the existing flow of data. 
-- **Test and iterate**: Run your dbt models to materialize the new tables/views, and verify the results. Check that the data looks correct (especially that your newly added data is showing up). The data being generated in the docker environment has _current_ dates, so this will be easy to verify. You should also add a few basic tests that make sense on important fields to validate data integrity, but I'm not going to be overly prescriptive abou this. While testing isn’t the main focus of this milestone, ensure the pipeline’s transformations are reliable so the final analytics will be accurate.
+- **Test and iterate**: Run your dbt models to materialize the new tables/views, and verify the results. Check that the data looks correct (especially that your newly added data is showing up). The data being generated in the docker environment has _current_ dates, so this will be easy to verify. You are also welcome to add a few basic tests that make sense on important fields to validate data integrity, but I'm not going to be overly prescriptive about this. While testing isn’t the main focus of this milestone, just find some way to ensure the pipeline’s transformations are reliable so the final analytics will be accurate.
 
 ---
 
