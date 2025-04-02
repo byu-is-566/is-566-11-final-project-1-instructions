@@ -116,6 +116,10 @@ With data now landing in the Snowflake stage, we need to automate the ingestion 
 ## Task 3: dbt Integration
 
 Now that the raw data from our two sources is inside Snowflake, we need to integrate it into our warehouse model. Use dbt to create models that incorporate this raw data into the existing warehouse flow, following the same general workflow (base, stage, intermediate). This step is where you apply your data modeling skills to join, clean, and prepare the data to be incorporated into an intermediate, analysis-focused view. (The specific use case driving this modeling is a sales-monitoring dashboard for the last 30 days of sales, which you'll be building in the next task.) Your job is to use what you have learned about using dbt to incorporate these new sources of data into the broader warehouse environment. 
+
+> [!TIP]
+> Unlike the last lab assignment, you don't need to worry about whether these builds happen in `dev` or `prod`. We won't use dbt Cloud until Milestone 2, so there's no need to keep track of which one you're building in. I've intentionally pulled the dbt setup from the _solution_ to last week's assignment so that you shouldn't need to change anything in the project or connection profiles. This means that you're almost certainly going to be applying any model changes to the `dbt_dev` schema in your database when you use `dbt build`. (Just sharing this in case it helps you know where to go look for the tables you'll be building out in this task.)
+
 - **Configure sources for new data**: Update your dbt project to declare the new raw data as sources. 
 - **Develop staging models**: Create (or adapt existing) staging models that select from the raw source data and apply initial transformations/cleaning. Use the same conventions that we have been using in the last two projects, and make smart decisions that you could easily justify.
 - **Adhere to dbt best practices**: Organize your models properly in the project structure, using the same hierarchy that we've already been using. Your goal is to integrate your new functionality into the existing flow of data. 
