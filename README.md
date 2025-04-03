@@ -71,7 +71,7 @@ is-566-11-final-project-1
 │ │ └─ load.py                                              
 │ ├─ init.sql                                              
 │ ├─ main.py                   # <-- Task 1                           
-│ ├─ requirements.txt                                              
+│ ├─ requirements.txt          # <-- Task 1                                    
 │ └─ utils
 │   ├─ connections.py
 │   ├─ env_loader.py
