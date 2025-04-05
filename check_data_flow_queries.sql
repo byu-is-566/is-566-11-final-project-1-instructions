@@ -6,9 +6,9 @@ use schema dbt_dev;
 -- have successfully integrated the data from your containerized ETL service all
 -- the way through to the stg_ecom__sales_orders table.
 
--- The first query compares the proportion of populated fields in the table back in
--- March of 2013 to the last 30 days (which should contain the data you've been 
--- generating).
+-- The first query compares the row count and proportion of populated fields in 
+-- the table back in March of 2013 to the last 30 days (which should contain the 
+-- data you've been generating).
 
 WITH base AS (
   SELECT 
@@ -80,6 +80,7 @@ unpivoted AS (
   UNION ALL SELECT order_month, 'TAX_AMT', ROUND(TAX_AMT / total_rows, 3) FROM base
   UNION ALL SELECT order_month, 'TERRITORY_ID', ROUND(TERRITORY_ID / total_rows, 3) FROM base
   UNION ALL SELECT order_month, 'TOTAL_DUE', ROUND(TOTAL_DUE / total_rows, 3) FROM base
+  UNION ALL SELECT order_month, 'ROW_COUNT', CAST(total_rows AS FLOAT) FROM base
 )
 SELECT
   column_name,
@@ -87,7 +88,8 @@ SELECT
   MAX(CASE WHEN order_month = 'recent_30_days' THEN proportion END) AS non_null_prop_recent_30_days
 FROM unpivoted
 GROUP BY column_name
-ORDER BY column_name;
+ORDER BY CASE WHEN column_name = 'ROW_COUNT' THEN 0 ELSE 1 END, 
+  column_name;
 
 
 
@@ -153,6 +155,7 @@ field_completeness AS (
 combined AS (
   SELECT 
     c.order_month,
+    c.total_items,
     n.avg_items_per_order,
     c.prop_LineTotal,
     c.prop_ModifiedDate,
@@ -175,6 +178,7 @@ unpivoted AS (
   UNION ALL SELECT order_month, 'non_null_prop_SpecialOfferID', ROUND(prop_SpecialOfferID, 3) FROM combined
   UNION ALL SELECT order_month, 'non_null_prop_UnitPrice', ROUND(prop_UnitPrice, 3) FROM combined
   UNION ALL SELECT order_month, 'non_null_prop_UnitPriceDiscount', ROUND(prop_UnitPriceDiscount, 3) FROM combined
+  UNION ALL SELECT order_month, 'item_count' AS field, CAST(total_items AS FLOAT) AS value FROM combined
 )
 SELECT 
   field,
@@ -182,4 +186,6 @@ SELECT
   MAX(CASE WHEN order_month = 'recent_30_days' THEN value END) AS value_recent_30_days
 FROM unpivoted
 GROUP BY field
-ORDER BY field;
+ORDER BY 
+  CASE WHEN field = 'item_count' THEN 0 ELSE 1 END,
+  field;

@@ -139,6 +139,8 @@ With data now landing in the Snowflake stage, we need to automate the ingestion 
 
 > [!IMPORTANT]
 > Before moving on, make sure that your system is doing exactly what is being asked in the instructions. We'll take some video evidence in Milestone 3.
+>
+> You will know that your Task 2 is complete when you see your jobb firing (either on a regular schedule or at least manually like you saw in the video above). If the jobs do their job correctly, you should then be able to do a `list @[your stage name]` and see no more files staged there (assuming, of course, that your docker compose environment is off or paused when you check).
 
 ---
 
@@ -160,6 +162,12 @@ Now that the raw data from our two sources is inside Snowflake, we need to integ
 
 > [!IMPORTANT]
 > Before moving on, make sure that your system is doing exactly what is being asked in the instructions. We'll take some video evidence in Milestone 3.
+> 
+> When you run the validation queries, you should see results that are similar to the two screenshots I've provided below. The only major difference you should expect between your query results and mine would be the first row where the rows (or items) are being counted; those values will depend on how many records you have accumulated in your warehouse from the docker generator. Otherwise, the proportions should be very similar to mine.
+
+<img src="screenshots/readme_img/query_1.png"  width="80%">
+
+<img src="screenshots/readme_img/query_2.png"  width="80%">
 
 ---
 
