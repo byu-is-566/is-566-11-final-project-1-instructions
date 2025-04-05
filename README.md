@@ -110,6 +110,16 @@ Our team needs a lightweight ETL microservice to regularly collect data from two
 
 > [!IMPORTANT]
 > The deliverable(s) for this milestone will (I think) just be a few short screen recordings of you showing your full system in action. But this won't happen until Milestone 3 in a couple of weeks. You'll obviously need to submit your code via GitHub by the due date, but you can wait to create this screen recording until I give you some clear direction on how to do so as a part of Milestone 3. For now, you should just carefully doublecheck that this task is doing exactly what has been requested in the high-level instructions.
+>
+> You'll know that your Task 1 is done when you:
+> 1. Have both the generator and processor running, seeing records consistently processed (but not consistently increasing, meaning that you're only pulling and processing new records). If you look at the logs for the processor container in Docker Desktop, you will likely see something similar to the first screenshot below.)
+> 2. You can run a `list @orders_stage`, `list @order_details_stage`, and `list @chat_stage`  and see files staged there (and being constantly added, given the activity in #1 above). To be extra sure, you may want to first run `remove @orders_stage`, etc., and then make sure that the files being _currently_ generated are landing there in each stage. (See the second screenshot below for a glimpse of what it should look like when you've run a `list` command after clearing out the stage with `remove`.)
+
+<img src="screenshots/readme_img/docker_flowing.png"  width="80%">
+
+<img src="screenshots/readme_img/files_staged.png"  width="80%">
+
+
 
 ---
 
