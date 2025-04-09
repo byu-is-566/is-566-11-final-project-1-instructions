@@ -141,6 +141,7 @@ With data now landing in the Snowflake stage, we need to automate the ingestion 
 > Before moving on, make sure that your system is doing exactly what is being asked in the instructions. We'll take some video evidence in Milestone 3.
 >
 > You will know that your Task 2 is complete when you see your jobb firing (either on a regular schedule or at least manually like you saw in the video above). If the jobs do their job correctly, you should then be able to do a `list @[your stage name]` and see no more files staged there (assuming, of course, that your docker compose environment is off or paused when you check).
+> In addition, you'll know that you have extracted data from your stages correctly when you see, in addition to the one `chat_logs_raw` table that I created for you, two normal-looking tables for the `orders` and `order_details` data, repectively. All three of these tables will existin the `RAW_EXT` schema in your database, and it would be a really good idea to ensure that they are being populated and that they look right. (I'm not going to display a screenshot for these because that will give away a bit too much of what the tables need to look like; instead, I'll just encourage you to think carefully about what data is being loaded into the stage, and what the resulting tables should contain.)
 
 ---
 
